@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>getUserMedia very simple demo</title>
+</head>
+<body>
+<div id="mainDiv">
+
+<video id = "vid1" autoplay></video>
+<video id = "vid2" autoplay></video>
+
+<script>
+  import "adapter.js";
+var constraints = {audio: false, video: true};
+var video1 = document.getElementById("vid1");
+var video2 = document.getElementById("vid2");
+
+    function VidFunc (videoNum) {
+        navigator.mediaDevices.getUserMedia({video: true, audio: false})
+    .then(function(stream) {
+      videoNum.srcObject = stream;
+      videoNum.play();
+    })
+    .catch(function(err) {
+      console.log("An error occurred: " + err);
+    });    
+}
+
+function factory (type) {
+  switch (type) {
+    case 'vid1Func':
+      return new VidFunc(video1);
+      case 'vid2Func':
+      return new VidFunc(video2);
+  }
+}
+
+vid1Func = factory('vid1Func');
+vid2Func = factory('vid2Func');
+
+
+</script>
+</div>
+</body>
+</html>
